@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:41:35
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-10 22:23:33
+ * @LastEditTime: 2022-12-11 22:17:30
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/MapService.js
  * @Description:
  *
@@ -20,6 +20,9 @@ class MapService {
   constructor() {
     this._map = null;
     this._view = null;
+    this.province = null;
+    this.fujianCities = null;
+    this.capitals = null;
   }
 
   /**
@@ -30,7 +33,7 @@ class MapService {
   initMap = (zoomlevel, targetStr) => {
     this._view = new View({
       zoom: zoomlevel,
-      center: olProj.transform([105, 39], 'EPSG:4326', 'EPSG:3857')
+      center: olProj.transform([118.0360714857695, 25.74283732844563], 'EPSG:4326', 'EPSG:3857')
     });
     this._map = new Map({
       controls: defaults({
@@ -41,6 +44,12 @@ class MapService {
       layers: [],
       view: this._view
     });
+
+    this._view.on('change:center', e => {
+      const center = this._view.getCenter();
+      const zoom = this._view.getZoom();
+      console.log(center, zoom, olProj.transform(center, 'EPSG:3857', 'EPSG:4326'));
+    });
   };
 
   /**
@@ -48,8 +57,13 @@ class MapService {
    */
   initLayer = () => {
     this.pushLayer(createTileLayer(new OSM(), 'BaseMap'));
-    this.pushLayer(getVectorTileFromGeoServer('camerayuhang:China_Provinces_UTF-8', '900913', 'ChinaBoundary'));
-    this.pushLayer(getVectorTileFromGeoServer('camerayuhang:China_Capitals_UTF-8', '900913', 'ChinaCapitals'));
+    this.province = getVectorTileFromGeoServer('camerayuhang:China_Provinces_UTF-8', '900913', 'ChinaProvinces');
+    this.pushLayer(this.province);
+    // this.pushLayer(getVectorTileFromGeoServer('camerayuhang:China_Counties_UTF-8', '900913', 'ChinaCounties'));
+    this.fujianCities = getVectorTileFromGeoServer('camerayuhang:Fujian_Cities_UTF-8', '900913', 'FujianCities');
+    this.pushLayer(this.fujianCities);
+    this.capitals = getVectorTileFromGeoServer('camerayuhang:China_Capitals_UTF-8', '900913', 'ChinaCapitals');
+    this.pushLayer(this.capitals);
   };
 
   /**

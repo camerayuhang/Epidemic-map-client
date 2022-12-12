@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-07 15:36:41
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-10 14:40:28
+ * @LastEditTime: 2022-12-12 14:26:12
  * @FilePath: /vue3-composition-epidemic-map/src/main.js
  * @Description:
  *
