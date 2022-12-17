@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:41:35
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-11 22:17:30
+ * @LastEditTime: 2022-12-16 22:32:19
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/MapService.js
  * @Description:
  *
@@ -33,7 +33,7 @@ class MapService {
   initMap = (zoomlevel, targetStr) => {
     this._view = new View({
       zoom: zoomlevel,
-      center: olProj.transform([118.0360714857695, 25.74283732844563], 'EPSG:4326', 'EPSG:3857')
+      center: olProj.transform([110, 39], 'EPSG:4326', 'EPSG:3857')
     });
     this._map = new Map({
       controls: defaults({
@@ -59,9 +59,10 @@ class MapService {
     this.pushLayer(createTileLayer(new OSM(), 'BaseMap'));
     this.province = getVectorTileFromGeoServer('camerayuhang:China_Provinces_UTF-8', '900913', 'ChinaProvinces');
     this.pushLayer(this.province);
-    // this.pushLayer(getVectorTileFromGeoServer('camerayuhang:China_Counties_UTF-8', '900913', 'ChinaCounties'));
-    this.fujianCities = getVectorTileFromGeoServer('camerayuhang:Fujian_Cities_UTF-8', '900913', 'FujianCities');
-    this.pushLayer(this.fujianCities);
+    this.cities = getVectorTileFromGeoServer('camerayuhang:China_Cities_UTF-8', '900913', 'ChinaCities');
+    this.pushLayer(this.cities);
+    // this.fujianCities = getVectorTileFromGeoServer('camerayuhang:Fujian_Cities_UTF-8', '900913', 'FujianCities');
+    // this.pushLayer(this.fujianCities);
     this.capitals = getVectorTileFromGeoServer('camerayuhang:China_Capitals_UTF-8', '900913', 'ChinaCapitals');
     this.pushLayer(this.capitals);
   };

@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:12:58
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-11 20:05:22
+ * @LastEditTime: 2022-12-16 22:32:32
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Map/MyMap.vue
  * @Description: 
  * 
@@ -14,12 +14,11 @@
 <script setup>
 import { onMounted } from 'vue';
 import mapService from '../../../service/GISService/MapService.js';
-import epidemicService from '../../../service/DataService/EpidemicService.js';
-const emit = defineEmits(['layerInitComplete']);
+const emit = defineEmits(['mapInitComplete']);
 onMounted(async () => {
-  mapService.initMap(7.6, 'map');
+  mapService.initMap(4, 'map');
   mapService.initLayer();
-  emit('layerInitComplete');
+  emit('mapInitComplete');
 });
 </script>
 

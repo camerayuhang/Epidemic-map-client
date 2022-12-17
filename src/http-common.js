@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-07 22:25:14
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-11 14:08:46
+ * @LastEditTime: 2022-12-16 00:49:03
  * @FilePath: /vue3-composition-epidemic-map/src/http-common.js
  * @Description:
  *
@@ -18,6 +18,11 @@ const requestAuth = axios.create({
   }
 });
 
-const requestEpidemic = axios.create({});
+const requestEpidemic = axios.create({
+  baseURL: API_URL + '/epidemic',
+  headers: {
+    'Content-type': 'application/json'
+  }
+});
 
 export { requestAuth, requestEpidemic };

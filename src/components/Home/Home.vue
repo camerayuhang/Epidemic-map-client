@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-08 16:49:31
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-12 12:28:24
+ * @LastEditTime: 2022-12-16 00:12:35
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Home.vue
  * @Description: 
  * 
@@ -13,7 +13,7 @@
     <div class="col-2"><component :is="currentCom === 'LayerTree' ? LayerTree : null"></component></div>
     <div class="col-10">
       <MyTools></MyTools>
-      <MyMap @layer-initComplete="createLayerTreeCom"></MyMap>
+      <MyMap @map-initComplete="createLayerTreeCom"></MyMap>
     </div>
   </div>
 </template>

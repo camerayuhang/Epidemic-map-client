@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-11 16:31:54
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-13 00:19:41
+ * @LastEditTime: 2022-12-17 11:46:05
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MyTools.vue
  * @Description: 
  * 
@@ -38,6 +38,7 @@ const toolNames = reactive({
   mappingTool: 'mapping',
   visualizationTool: 'Visualization'
 });
+
 const toolVisiable = reactive({
   mappingTools: false,
   visualizationToolTools: false
