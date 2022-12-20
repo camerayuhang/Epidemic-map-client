@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:41:35
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-16 22:32:19
+ * @LastEditTime: 2022-12-20 18:52:11
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/MapService.js
  * @Description:
  *
@@ -15,6 +15,8 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM.js';
 import { getVectorTileFromGeoServer, createTileLayer } from '../GISService/LayerTools.js';
 import BaseLayer from 'ol/layer/Base.js';
+import { PopupOverlay } from './Overlays/PopupOverlay.js';
+import { SelectInteraction } from './Interaction/SelectInteraction.js';
 
 class MapService {
   constructor() {
@@ -23,6 +25,7 @@ class MapService {
     this.province = null;
     this.fujianCities = null;
     this.capitals = null;
+    this.popup = null;
   }
 
   /**
@@ -45,11 +48,11 @@ class MapService {
       view: this._view
     });
 
-    this._view.on('change:center', e => {
-      const center = this._view.getCenter();
-      const zoom = this._view.getZoom();
-      console.log(center, zoom, olProj.transform(center, 'EPSG:3857', 'EPSG:4326'));
-    });
+    // this._view.on('change:center', e => {
+    //   const center = this._view.getCenter();
+    //   const zoom = this._view.getZoom();
+    //   console.log(center, zoom, olProj.transform(center, 'EPSG:3857', 'EPSG:4326'));
+    // });
   };
 
   /**
@@ -67,6 +70,11 @@ class MapService {
     this.pushLayer(this.capitals);
   };
 
+  initOthers = element => {
+    const popupOverlay = new PopupOverlay(this._map, element);
+    this.popup = popupOverlay.initOverlay();
+  };
+
   /**
    * add layer or layers the current map
    * @param {Array|BaseLayer} layerArr - `BaseLayer` or arrays containing `BaseLayer`
@@ -81,6 +89,16 @@ class MapService {
       });
     }
   };
+
+  searchForLayer(layerName) {
+    let layer = null;
+    this._map.getLayers().forEach((ele, index) => {
+      if (ele.get('name') == layerName) {
+        layer = ele;
+      }
+    });
+    return layer;
+  }
 
   destoryMap = () => {
     this._map = null;

@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-11 16:31:54
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-17 11:46:05
+ * @LastEditTime: 2022-12-21 01:02:16
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MyTools.vue
  * @Description: 
  * 
@@ -20,27 +20,33 @@
             <el-checkbox v-model="toolVisiable.mappingTools" :label="toolNames.mappingTool" size="large" border />
           </li>
           <li class="nav-item">
-            <el-checkbox v-model="toolVisiable.visualizationToolTools" :label="toolNames.visualizationTool" size="large" border />
+            <el-checkbox v-model="toolVisiable.graphsPanel" :label="toolNames.graphsPanel" size="large" border />
           </li>
         </ul>
       </div>
       <!-- <el-dialog v-model="toolVisiable.mappingTools" width="30%" align-center :title="toolName.mappingTools" :modal="true" draggable> <MyMappingTool></MyMappingTool> </el-dialog> -->
     </div>
   </nav>
-  <MyMappingTool :visiable="toolVisiable.mappingTools" @close="toolVisiable.mappingTools = false"></MyMappingTool>
-  <MyVisualizationTool :visiable="toolVisiable.visualizationToolTools"> </MyVisualizationTool>
+  <!-- <MyMappingTool :visiable="toolVisiable.mappingTools" @close="toolVisiable.mappingTools = false"></MyMappingTool> -->
+  <MyPanel :top="'100px'" :left="'40px'" :width="'300px'" :title="toolNames.mappingTool" v-show="toolVisiable.mappingTools">
+    <SymbolizationPanel></SymbolizationPanel>
+  </MyPanel>
+  <MyPanel :top="'100px'" :right="'40px'" :width="'350px'" :height="'700px'" :title="toolNames.graphsPanel" v-show="toolVisiable.graphsPanel">
+    <GraphsPanel></GraphsPanel>
+  </MyPanel>
 </template>
 <script setup>
 import { ref, reactive } from 'vue';
-import MyMappingTool from './MapTools/MappingTool.vue';
-import MyVisualizationTool from './MapTools/VisualizationTool.vue';
+import MyPanel from '../../Template/MyPanel.vue';
+import SymbolizationPanel from './MapTools/SymbolizationPanel.vue';
+import GraphsPanel from './MapTools/GraphsPanel.vue';
 const toolNames = reactive({
-  mappingTool: 'mapping',
-  visualizationTool: 'Visualization'
+  mappingTool: 'Symbology',
+  graphsPanel: 'Graphs'
 });
 
 const toolVisiable = reactive({
   mappingTools: false,
-  visualizationToolTools: false
+  graphsPanel: false
 });
 </script>

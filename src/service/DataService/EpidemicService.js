@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-11 14:05:10
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-17 11:37:40
+ * @LastEditTime: 2022-12-19 16:11:53
  * @FilePath: /vue3-composition-epidemic-map/src/service/DataService/EpidemicService.js
  * @Description:
  *
@@ -63,19 +63,15 @@ class EpidemicService {
 
     return provinceDic;
   };
-  // const fujianConfirm = confirm.slice(11900, 14960);
-  // const dict = {};
-  // fujianConfirm.forEach(element => {
-  //   let curDateArr = dict[element['日期']];
-  //   if (curDateArr === undefined) {
-  //     curDateArr = [];
-  //     curDateArr.push(element);
-  //     dict[element['日期']] = curDateArr;
-  //   } else {
-  //     curDateArr.push(element);
-  //   }
-  // });
-  // return dict;
+
+  getEpidemicWithAllDate = province => {
+    return requestEpidemic.get('/alldate', {
+      params: {
+        province: province
+      },
+      headers: authHeader
+    });
+  };
 }
 
 export default new EpidemicService();

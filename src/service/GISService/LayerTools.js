@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 22:15:37
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-11 00:17:37
+ * @LastEditTime: 2022-12-18 16:38:03
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/LayerTools.js
  * @Description:
  *
@@ -15,6 +15,12 @@ import MVT from 'ol/format/MVT';
 import TileLayer from 'ol/layer/Tile';
 import { geoServer_URL } from '@/myconfig.js';
 import Source from 'ol/source/Source';
+import mapService from '../GISService/MapService';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
+import { fromLonLat } from 'ol/proj';
+import { Feature } from 'ol';
+import { Point } from 'ol/geom';
 /**
  *
  * @param {String} layer - name of layer, named in such format `{workspace name}:{layer name}`
@@ -50,6 +56,37 @@ const createTileLayer = (layerSource, name) => {
   return tileLayer;
 };
 
-const capitalsStyle = feature => {};
+const createEpidemicPointLayer = () => {
+  const source = new VectorSource({
+    features: []
+  });
+  const layer = new VectorLayer({
+    name: 'EpidemicPoints',
+    source: source
+  });
+  return layer;
+};
 
-export { getVectorTileFromGeoServer, createTileLayer };
+/**
+ *
+ * @param {VectorLayer} layer
+ * @param {*} feature
+ */
+const createFeatures = (layer, data) => {
+  // 清空要素
+  const source = layer.getSource();
+  source.clear();
+  const features = [];
+  for (let i = 0; i < data.length; i++) {
+    const coord = fromLonLat([data[i].longitude, data[i].latitude]);
+    const feature = new Feature({
+      geometry: new Point(coord),
+      attr: data[i]
+    });
+    feature.setId(data[i].id);
+    features.push(feature);
+  }
+  // 添加要素
+  source.addFeatures(features);
+};
+export { getVectorTileFromGeoServer, createTileLayer, createEpidemicPointLayer, createFeatures };

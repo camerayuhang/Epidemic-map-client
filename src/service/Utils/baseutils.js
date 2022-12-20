@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-10 16:48:40
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-10 16:48:43
+ * @LastEditTime: 2022-12-17 20:11:03
  * @FilePath: /vue3-composition-epidemic-map/src/service/Utils/baseutils.js
  * @Description:
  *
@@ -73,4 +73,14 @@ const getIndexof = (arr, obj) => {
   return objIndex;
 };
 
-export { fileToBase64, clearEmptyValue, diffFormData, reOrderArr, getIndexof };
+const clearEmptyString = form => {
+  const formCopy = { ...form };
+  for (const key in formCopy) {
+    if (formCopy[key] == '' || formCopy[key] == '全国') {
+      delete formCopy[key];
+    }
+  }
+  return formCopy;
+};
+
+export { fileToBase64, clearEmptyValue, diffFormData, reOrderArr, getIndexof, clearEmptyString };

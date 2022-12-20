@@ -13,9 +13,12 @@
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "bootstrap-vue-3": "^0.4.13",
+    "classify-series": "^0.3.2",
+    "echarts": "^5.4.1",
     "element-plus": "^2.2.26",
     "ol": "^7.1.0",
     "vue": "^3.2.45",
+    "vue-echarts": "^6.3.2",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"
   },
