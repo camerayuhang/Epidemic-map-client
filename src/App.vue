@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-11-23 21:18:21
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-12 12:31:16
+ * @LastEditTime: 2022-12-21 16:28:13
  * @FilePath: /vue3-composition-epidemic-map/src/App.vue
  * @Description: 
  * 
@@ -39,7 +39,7 @@
         </li>
       </div>
     </nav>
-    <div class="container-fluid mt-3 h-100">
+    <div class="container-fluid mt-1 h-100">
       <RouterView />
     </div>
   </div>

@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 22:15:37
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-18 16:38:03
+ * @LastEditTime: 2022-12-21 20:37:58
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/LayerTools.js
  * @Description:
  *
@@ -89,4 +89,5 @@ const createFeatures = (layer, data) => {
   // 添加要素
   source.addFeatures(features);
 };
+
 export { getVectorTileFromGeoServer, createTileLayer, createEpidemicPointLayer, createFeatures };

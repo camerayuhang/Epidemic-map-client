@@ -2,12 +2,13 @@
  * @Author: camerayuhang
  * @Date: 2022-12-10 16:48:40
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-17 20:11:03
+ * @LastEditTime: 2022-12-21 20:35:56
  * @FilePath: /vue3-composition-epidemic-map/src/service/Utils/baseutils.js
  * @Description:
  *
  * Copyright (c) 2022 by wangyuhang, All Rights Reserved.
  */
+
 // 文件转换成base64
 const fileToBase64 = file => {
   const promise = new Promise((resolve, reject) => {

@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-11 20:13:04
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-20 15:54:49
+ * @LastEditTime: 2022-12-21 20:08:53
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/SymbolizationService.js
  * @Description:
  *

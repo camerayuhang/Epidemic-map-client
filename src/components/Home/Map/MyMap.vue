@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:12:58
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-20 22:20:28
+ * @LastEditTime: 2022-12-22 00:24:31
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Map/MyMap.vue
  * @Description: 
  * 
@@ -24,6 +24,8 @@ const mypopup = ref(null);
 const featureInfo = computed(() => {
   return store.state.data.highLightData;
 });
+store.dispatch('data/updateData', { data: { country: '中国' } });
+store.dispatch('data/initLabels');
 onMounted(async () => {
   mapService.initMap(4, 'map');
   mapService.initLayer();

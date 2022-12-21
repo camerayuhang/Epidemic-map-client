@@ -1,3 +1,13 @@
+/*
+ * @Author: camerayuhang
+ * @Date: 2022-12-20 21:40:23
+ * @LastEditors: camerayuhang
+ * @LastEditTime: 2022-12-21 18:09:44
+ * @FilePath: /vue3-composition-epidemic-map/src/store/data.module.js
+ * @Description:
+ *
+ * Copyright (c) 2022 by wangyuhang, All Rights Reserved.
+ */
 import epidemicService from '../service/DataService/EpidemicService.js';
 const data = {
   namespaced: true,
@@ -10,7 +20,13 @@ const data = {
     },
     cityWithAllDate: undefined,
     provinceWithAllDate: undefined,
-    countryWithAlldate: undefined
+    countryWithAlldate: undefined,
+    labels: {
+      provinceArr: undefined,
+      cityArr: undefined,
+      dateArr: undefined,
+      fieldArr: undefined
+    }
   },
   mutations: {
     setRegion(state, { city, province, country }) {
@@ -20,15 +36,25 @@ const data = {
     },
     setHighLightData(state, payload) {
       state.highLightData = payload.data;
+      state.region.city = payload.data.city;
     },
     setCityWithAllDate(state, payload) {
       state.cityWithAllDate = payload.data;
+      state.region.city = payload.data[0].city;
     },
     setProvinceWithAllDate(state, payload) {
       state.provinceWithAllDate = payload.data;
+      state.region.province = payload.data[0].province;
     },
     setCountryWithAlldate(state, payload) {
       state.countryWithAlldate = payload.data;
+      state.region.country = payload.data[0].country;
+    },
+    setLabels(state, { cityArr, provinceArr, fieldArr, dateArr }) {
+      state.labels.cityArr = cityArr;
+      state.labels.provinceArr = provinceArr;
+      state.labels.fieldArr = fieldArr;
+      state.labels.dateArr = dateArr;
     }
   },
   actions: {
@@ -50,7 +76,26 @@ const data = {
         const { data } = await epidemicService.getEpidemicWithAllDate();
         context.commit('setCountryWithAlldate', { data });
       }
-      context.commit('setRegion', { city, province, country });
+    },
+    async initLabels({ commit }) {
+      const { data } = await epidemicService.getEpidemicInfo({ city: '北京' });
+      const dateArr = [];
+      let fieldArr = null;
+      const cityArr = [];
+      const provinceArr = [];
+      data.forEach(row => {
+        dateArr.push(row['date']);
+      });
+      fieldArr = Object.keys(data[0]);
+      const { data: result } = await epidemicService.getEpidemicInfo({ date: '2022-12-06' });
+      result.forEach(row => {
+        cityArr.push(row['city']);
+        if (!provinceArr.includes(row['province'])) {
+          provinceArr.push(row['province']);
+        }
+      });
+      provinceArr.push('全国');
+      commit('setLabels', { dateArr, cityArr, provinceArr, fieldArr });
     }
   }
 };

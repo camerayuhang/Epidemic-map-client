@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-20 14:26:27
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 01:46:28
+ * @LastEditTime: 2022-12-21 15:48:21
  * @FilePath: /vue3-composition-epidemic-map/src/components/Graphs/EpidemicInfoCart.vue
  * @Description: 
  * 
@@ -10,7 +10,8 @@
 -->
 <template>
   <MyChart :title="text" :height="height">
-    <div class="region-name mb-3">
+    <div class="date d-flex">
+      <el-icon class="me-1"><Calendar /></el-icon>
       <h6>{{ dataSource.date }}</h6>
     </div>
     <div class="card-group justify-content-center row row-cols-3 text-center g-2">

@@ -2,14 +2,14 @@
  * @Author: camerayuhang
  * @Date: 2022-12-18 19:39:50
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-20 22:15:26
+ * @LastEditTime: 2022-12-21 20:40:06
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MapTools/SymbolizationPanel.vue
  * @Description: 
  * 
  * Copyright (c) 2022 by wangyuhang, All Rights Reserved. 
 -->
 <template>
-  <div id="symbology-panel">
+  <div id="symbology-panel" v-loading="loading">
     <el-form label-width="80px" label-position="left">
       <el-form-item label="Method">
         <el-select v-model="methodSelected" placeholder="select Method">
@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Layer">
-        <el-select v-model="layerSelected" placeholder="select Layer">
+        <el-select v-model="layerSelected" placeholder="select Layer" @visible-change="refreshLayers">
           <el-option v-for="item in layerLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>
@@ -69,6 +69,7 @@ const formWrap = ref({
   date: '2022-12-06',
   province: '全国'
 });
+const loading = ref(false);
 const layerLabels = symbolizationService.layerLabels;
 const fieldLabels = symbolizationService.fieldLabels;
 const dateLabels = symbolizationService.dateLabels;
@@ -89,6 +90,7 @@ let joinedField = '';
 let layer = null;
 let fetchAPI = null;
 let Renderer = null;
+let selectInteraction = null;
 
 onMounted(() => {
   // symbolizationService.initLayerLabels();
@@ -122,28 +124,36 @@ watch(methodSelected, () => {
 });
 
 const MappingHandler = async () => {
+  loading.value = true;
   if (methodSelected.value == 'Graduated Symbol') {
     const { data } = await epidemicService.getEpidemicInfo(form.value);
-    if (!mapService.searchForLayer('EpidemicPoints')) {
-      layer = createEpidemicPointLayer();
-      mapService.pushLayer(layer);
-      const selectInteraction = new SelectInteraction(layer, mapService._map, mapService.popup);
+    // if (!mapService.searchForLayer('EpidemicPoints')) {
+    //   layer = createEpidemicPointLayer();
+    //   mapService.pushLayer(layer);
+    if (!selectInteraction) {
+      selectInteraction = new SelectInteraction(layer, mapService._map, mapService.popup);
       selectInteraction.initInteraction();
     }
+    // }
     createFeatures(layer, data);
     combinedData = data;
   } else if (methodSelected.value == 'Graduated Color') {
     combinedData = await fetchAPI(form.value);
   }
+  // the last 2 args are useless for Graduated Symbol
   const renderer = new Renderer(fieldSelected.value, layer, combinedData, symbolizationService.joinTable, joinedField);
   layer.set('colorMap', renderer.colorMap);
   renderer.render();
   colorMap.value = layer.get('colorMap');
   mapService._map.render();
+  loading.value = false;
 };
 
 const clearHandler = () => {
   symbolizationService.clearStyle(layer);
   colorMap.value = layer.get('colorMap');
+};
+const refreshLayers = visiable => {
+  if (visiable) symbolizationService.initLayerLabels();
 };
 </script>

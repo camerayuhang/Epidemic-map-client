@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-18 18:44:38
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-20 13:53:20
+ * @LastEditTime: 2022-12-21 21:41:49
  * @FilePath: /vue3-composition-epidemic-map/src/components/Template/MyPanel.vue
  * @Description: 
  * 
@@ -10,12 +10,12 @@
 -->
 <template>
   <div class="panel position-absolute" :style="{ top: top, left: left, right: right, bottom: bottom, width: width, height: height }">
-    <div class="panel-header mb-3">
+    <div v-if="title" class="panel-header mb-3">
       <h4>
         <strong>{{ title }}</strong>
       </h4>
     </div>
-    <div class="panel-body mb-3">
+    <div class="panel-body">
       <slot></slot>
     </div>
   </div>
@@ -23,8 +23,7 @@
 <script setup>
 defineProps({
   title: {
-    type: String,
-    default: 'Panel Title'
+    type: String
   },
   top: {
     type: String

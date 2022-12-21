@@ -2,17 +2,31 @@
  * @Author: camerayuhang
  * @Date: 2022-12-12 14:58:50
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 01:28:16
+ * @LastEditTime: 2022-12-21 22:50:24
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MapTools/GraphsPanel.vue
  * @Description: 
  * 
  * Copyright (c) 2022 by wangyuhang, All Rights Reserved. 
 -->
 <template>
-  <EpidemicInfoCart v-if="region.city" height="200px" :text="cityDataSource[0].city" :data-source="cityDataSource[cityDataSource.length - 1]"></EpidemicInfoCart>
-  <LargeAreaChart v-if="region.city" :data-source="cityDataSource" :dimensions="['date', 'daily_new_cases']" text="Daily spread trends" height="270px"> </LargeAreaChart>
-  <!-- <SmoothedLineChart :data-source="dataSource" :dimensions="['date', 'confirmed']" text="Cumulative spread trends"> </SmoothedLineChart> -->
-  <StackedLine v-if="region.city" :data-source="cityDataSource" :dimensions="['date', 'confirmed', 'deaths', 'recovered']" text="Cumulative spread trends" height="270px"></StackedLine>
+  <div id="city" class="text-start">
+    <div class="d-flex flex-row align-items-center fs-4 mb-1">
+      <el-icon :size="25" class="me-1"><MapLocation /></el-icon><strong>City</strong>
+    </div>
+    <EpidemicInfoCart v-if="region.city" height="200px" :text="cityDataSource[0].city" :data-source="cityDataSource[cityDataSource.length - 1]"></EpidemicInfoCart>
+    <LargeAreaChart v-if="region.city" :data-source="cityDataSource" :dimensions="['date', 'daily_new_cases']" text="Daily spread trends" height="270px"> </LargeAreaChart>
+    <!-- <SmoothedLineChart :data-source="dataSource" :dimensions="['date', 'confirmed']" text="Cumulative spread trends"> </SmoothedLineChart> -->
+    <StackedLine v-if="region.city" :data-source="cityDataSource" :dimensions="['date', 'confirmed', 'recovered', 'deaths']" text="Cumulative spread trends" height="270px"></StackedLine>
+  </div>
+  <div id="province" class="text-start">
+    <div class="d-flex flex-row align-items-center fs-4 mb-1">
+      <el-icon :size="25" class="me-1"><MapLocation /></el-icon><strong>Province</strong>
+    </div>
+    <EpidemicInfoCart v-if="region.province" height="200px" :text="provinceDataSource[0].province" :data-source="provinceDataSource[provinceDataSource.length - 1]"></EpidemicInfoCart>
+    <LargeAreaChart v-if="region.province" :data-source="provinceDataSource" :dimensions="['date', 'daily_new_cases']" text="Daily spread trends" height="270px"> </LargeAreaChart>
+    <!-- <SmoothedLineChart :data-source="dataSource" :dimensions="['date', 'confirmed']" text="Cumulative spread trends"> </SmoothedLineChart> -->
+    <StackedLine v-if="region.province" :data-source="provinceDataSource" :dimensions="['date', 'confirmed', 'recovered', 'deaths']" text="Cumulative spread trends" height="270px"></StackedLine>
+  </div>
 </template>
 
 <script setup>
