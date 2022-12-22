@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:41:35
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-20 18:52:11
+ * @LastEditTime: 2022-12-22 23:06:38
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/MapService.js
  * @Description:
  *
@@ -10,13 +10,15 @@
  */
 import { Map, View } from 'ol';
 import * as olProj from 'ol/proj';
-import { defaults } from 'ol/control';
+import { FullScreen, defaults as defaultControls } from 'ol/control.js';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM.js';
 import { getVectorTileFromGeoServer, createTileLayer } from '../GISService/LayerTools.js';
 import BaseLayer from 'ol/layer/Base.js';
 import { PopupOverlay } from './Overlays/PopupOverlay.js';
 import { SelectInteraction } from './Interaction/SelectInteraction.js';
+import { applyStyle } from 'ol-mapbox-style';
+import VectorTileLayer from 'ol/layer/VectorTile.js';
 
 class MapService {
   constructor() {
@@ -39,10 +41,15 @@ class MapService {
       center: olProj.transform([110, 39], 'EPSG:4326', 'EPSG:3857')
     });
     this._map = new Map({
-      controls: defaults({
-        zoom: false,
-        attribution: false
-      }),
+      controls: defaultControls({
+        zoom: true,
+        attribution: false,
+        rotate: false
+      }).extend([
+        new FullScreen({
+          source: 'map-and-tools'
+        })
+      ]),
       target: targetStr,
       layers: [],
       view: this._view
@@ -59,15 +66,17 @@ class MapService {
    * initialize the Layers of this map
    */
   initLayer = () => {
-    this.pushLayer(createTileLayer(new OSM(), 'BaseMap'));
+    const layer = new VectorTileLayer({ declutter: true, name: 'streets-v12', updateWhileAnimating: true });
+    applyStyle(layer, 'mapbox://styles/camerayuhang/clbrqirmf000715o2tk1dv26u', { accessToken: 'pk.eyJ1IjoiY2FtZXJheXVoYW5nIiwiYSI6ImNsYnJwMmt1eDFmaGMzcHBsMHl1dXpqOW0ifQ.voxLAF6gSmGJKrhDNsYGGw' });
+    this.pushLayer(layer);
     this.province = getVectorTileFromGeoServer('camerayuhang:China_Provinces_UTF-8', '900913', 'ChinaProvinces');
     this.pushLayer(this.province);
     this.cities = getVectorTileFromGeoServer('camerayuhang:China_Cities_UTF-8', '900913', 'ChinaCities');
     this.pushLayer(this.cities);
     // this.fujianCities = getVectorTileFromGeoServer('camerayuhang:Fujian_Cities_UTF-8', '900913', 'FujianCities');
     // this.pushLayer(this.fujianCities);
-    this.capitals = getVectorTileFromGeoServer('camerayuhang:China_Capitals_UTF-8', '900913', 'ChinaCapitals');
-    this.pushLayer(this.capitals);
+    // this.capitals = getVectorTileFromGeoServer('camerayuhang:China_Capitals_UTF-8', '900913', 'ChinaCapitals');
+    // this.pushLayer(this.capitals);
   };
 
   initOthers = element => {

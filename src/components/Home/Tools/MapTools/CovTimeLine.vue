@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-21 21:34:04
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-22 02:01:40
+ * @LastEditTime: 2022-12-22 23:21:34
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MapTools/CovTimeLine.vue
  * @Description: 
  * 
@@ -52,7 +52,7 @@ const play = ref(false);
 const valueForDate = ref(0);
 const store = useStore();
 
-const secInterval = ref(500);
+const secInterval = ref(700);
 const steps = ref(5);
 
 let timer = null;
@@ -84,7 +84,8 @@ const playHandler = () => {
       }
       console.log(valueForDate.value);
       const { data } = await epidemicService.getEpidemicInfo({ date: date.value });
-      if (!mapService.searchForLayer('EpidemicPoints')) {
+      layer = mapService.searchForLayer('EpidemicPoints');
+      if (!layer) {
         layer = createEpidemicPointLayer();
         mapService.pushLayer(layer);
       }

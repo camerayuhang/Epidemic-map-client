@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-20 21:40:23
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 18:09:44
+ * @LastEditTime: 2022-12-22 21:00:42
  * @FilePath: /vue3-composition-epidemic-map/src/store/data.module.js
  * @Description:
  *
@@ -21,14 +21,33 @@ const data = {
     cityWithAllDate: undefined,
     provinceWithAllDate: undefined,
     countryWithAlldate: undefined,
+    allCitiesData: undefined,
     labels: {
       provinceArr: undefined,
       cityArr: undefined,
       dateArr: undefined,
       fieldArr: undefined
+    },
+    options: {
+      cityArr: undefined
     }
   },
+  // getters: {
+  //   optionsCityLabels(state) {
+  //     // const arr = [];
+  //     // state.labels.cityArr.forEach(element => {
+  //     //   arr.push({
+  //     //     label: element,
+  //     //     value: label
+  //     //   });
+  //     // });
+  //     return state.labels.cityArr;
+  //   }
+  // },
   mutations: {
+    setAllCitiesData(state, data) {
+      state.allCitiesData = data;
+    },
     setRegion(state, { city, province, country }) {
       state.region.city = city;
       state.region.province = province;
@@ -55,6 +74,9 @@ const data = {
       state.labels.provinceArr = provinceArr;
       state.labels.fieldArr = fieldArr;
       state.labels.dateArr = dateArr;
+    },
+    setOptions(state, { optionsArr }) {
+      state.options.cityArr = optionsArr;
     }
   },
   actions: {
@@ -82,13 +104,19 @@ const data = {
       const dateArr = [];
       let fieldArr = null;
       const cityArr = [];
+      const optionsArr = [];
       const provinceArr = [];
       data.forEach(row => {
         dateArr.push(row['date']);
       });
       fieldArr = Object.keys(data[0]);
       const { data: result } = await epidemicService.getEpidemicInfo({ date: '2022-12-06' });
+      commit('setAllCitiesData', result);
       result.forEach(row => {
+        optionsArr.push({
+          label: row['city'],
+          value: row['id']
+        });
         cityArr.push(row['city']);
         if (!provinceArr.includes(row['province'])) {
           provinceArr.push(row['province']);
@@ -96,6 +124,7 @@ const data = {
       });
       provinceArr.push('全国');
       commit('setLabels', { dateArr, cityArr, provinceArr, fieldArr });
+      commit('setOptions', { optionsArr });
     }
   }
 };

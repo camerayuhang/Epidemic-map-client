@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-08 16:49:31
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-18 19:20:59
+ * @LastEditTime: 2022-12-22 16:49:22
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Home.vue
  * @Description: 
  * 
@@ -11,7 +11,7 @@
 <template>
   <div class="row h-100">
     <div class="col-2"><component :is="currentCom === 'LayerTree' ? LayerTree : null"></component></div>
-    <div class="col-10 position-relative">
+    <div class="col-10 position-relative" id="map-and-tools">
       <MyTools></MyTools>
       <MyMap @map-initComplete="createLayerTreeCom"></MyMap>
     </div>

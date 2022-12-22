@@ -2,14 +2,14 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:13:05
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-16 00:05:40
+ * @LastEditTime: 2022-12-22 16:01:52
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/LayerTree/MyLayerTree.vue
  * @Description: 
  * 
  * Copyright (c) 2022 by wangyuhang, All Rights Reserved. 
 -->
 <template>
-  <div>
+  <div class="pt-1">
     <div class="tree-head">
       <h1>Contents</h1>
       <p>

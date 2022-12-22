@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-11-23 21:18:21
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 16:28:13
+ * @LastEditTime: 2022-12-22 15:35:42
  * @FilePath: /vue3-composition-epidemic-map/src/App.vue
  * @Description: 
  * 
@@ -39,7 +39,7 @@
         </li>
       </div>
     </nav>
-    <div class="container-fluid mt-1 h-100">
+    <div class="container-fluid" id="my-container">
       <RouterView />
     </div>
   </div>
@@ -71,6 +71,7 @@ const logOut = () => {
   text-align: center;
   color: #2c3e50;
   height: 100%;
+  /* overflow: hidden; */
   /*margin-top: 60px; */
 }
 
@@ -78,5 +79,8 @@ html,
 body {
   margin: 0;
   height: 100%;
+}
+#my-container {
+  height: calc(100% - 56px);
 }
 </style>

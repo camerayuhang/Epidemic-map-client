@@ -2,8 +2,8 @@
  * @Author: camerayuhang
  * @Date: 2022-12-20 15:59:29
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 00:31:57
- * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/Interaction/selectInteraction.js
+ * @LastEditTime: 2022-12-22 21:28:31
+ * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/Interaction/SelectInteraction.js
  * @Description:
  *
  * Copyright (c) 2022 by wangyuhang, All Rights Reserved.
@@ -68,10 +68,10 @@ class SelectInteraction {
     // 1.所有点要素还原默认属性
     this.clearStyle(this.pointLayer.getSource().getFeatures());
     // 2.获取要素上的属性信息
-    this.info.value = feature.get('attr');
+    const info = feature.get('attr');
     store.dispatch('data/updateData', { data: feature.get('attr') });
     // 3.设置高亮要素的样式
-    feature.setStyle(this.selectedStyle(this.info.value.city, feature.get('radius')));
+    feature.setStyle(this.selectedStyle(info['city'], feature.get('radius')));
     // 4.获取横轴墨卡托坐标，获取几何坐标，不要获取点击坐标
     const coord = feature.getGeometry().getCoordinates();
     // 显示弹出框
@@ -86,6 +86,7 @@ class SelectInteraction {
 
   // 选中样式
   selectedStyle(name, radius) {
+    radius = radius == undefined ? 7 : radius;
     const orginalColor = 'rgba(244,101,73,0.6)';
     const hightlightColor = 'rgba(216,45,36,1)';
     const stroke = new Stroke({

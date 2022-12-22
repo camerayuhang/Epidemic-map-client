@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 22:15:37
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 20:37:58
+ * @LastEditTime: 2022-12-22 23:00:36
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/LayerTools.js
  * @Description:
  *
@@ -21,6 +21,8 @@ import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
 import { Feature } from 'ol';
 import { Point } from 'ol/geom';
+import * as olProj from 'ol/proj';
+
 /**
  *
  * @param {String} layer - name of layer, named in such format `{workspace name}:{layer name}`
@@ -90,4 +92,22 @@ const createFeatures = (layer, data) => {
   source.addFeatures(features);
 };
 
-export { getVectorTileFromGeoServer, createTileLayer, createEpidemicPointLayer, createFeatures };
+const zoomToLayer = (lon, lat, view, cb) => {
+  const coord = olProj.transform([lon, lat], 'EPSG:4326', 'EPSG:3857');
+  // 新坐标
+  // this.newCoord = coord
+  // 同时缩放和平移
+  view.animate(
+    {
+      zoom: 4,
+      duration: 1000
+    },
+    {
+      zoom: 10,
+      center: coord,
+      duration: 1000
+    },
+    cb
+  );
+};
+export { getVectorTileFromGeoServer, createTileLayer, createEpidemicPointLayer, createFeatures, zoomToLayer };

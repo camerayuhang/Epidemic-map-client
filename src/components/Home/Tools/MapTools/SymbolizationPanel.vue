@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-18 19:39:50
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 20:40:06
+ * @LastEditTime: 2022-12-22 17:20:09
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MapTools/SymbolizationPanel.vue
  * @Description: 
  * 
@@ -12,27 +12,27 @@
   <div id="symbology-panel" v-loading="loading">
     <el-form label-width="80px" label-position="left">
       <el-form-item label="Method">
-        <el-select v-model="methodSelected" placeholder="select Method">
+        <el-select v-model="methodSelected" placeholder="select Method" :teleported="false">
           <el-option v-for="item in mehodLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>
       <el-form-item label="Province">
-        <el-select v-model="formWrap.province" placeholder="select Province">
+        <el-select v-model="formWrap.province" placeholder="select Province" :teleported="false">
           <el-option v-for="item in provinceLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>
       <el-form-item label="Layer">
-        <el-select v-model="layerSelected" placeholder="select Layer" @visible-change="refreshLayers">
+        <el-select v-model="layerSelected" placeholder="select Layer" @visible-change="refreshLayers" :teleported="false">
           <el-option v-for="item in layerLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>
       <el-form-item label="Field">
-        <el-select v-model="fieldSelected" placeholder="select Field">
+        <el-select v-model="fieldSelected" placeholder="select Field" :teleported="false">
           <el-option v-for="item in fieldLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>
       <el-form-item label="Date">
-        <el-select v-model="formWrap.date" placeholder="select Date">
+        <el-select v-model="formWrap.date" placeholder="select Date" :teleported="false">
           <el-option v-for="item in dateLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>

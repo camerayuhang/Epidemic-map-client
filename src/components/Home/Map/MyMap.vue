@@ -2,14 +2,14 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:12:58
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-22 00:24:31
+ * @LastEditTime: 2022-12-22 15:38:58
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Map/MyMap.vue
  * @Description: 
  * 
  * Copyright (c) 2022 by wangyuhang, All Rights Reserved. 
 -->
 <template>
-  <div id="map" class="text-start w-100 h-100">
+  <div id="map" class="text-start">
     <PopOver ref="mypopup" :info="featureInfo"></PopOver>
   </div>
 </template>
@@ -34,4 +34,10 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+#map {
+  width: 100%;
+  height: 100%;
+  height: calc(100% - 56px);
+}
+</style>

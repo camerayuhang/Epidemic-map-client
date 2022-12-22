@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-21 16:51:09
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 19:46:42
+ * @LastEditTime: 2022-12-22 23:21:56
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MapTools/CreatePointsDialog.vue
  * @Description: 
  * 
@@ -45,7 +45,8 @@ const provinceLabels = computed(() => {
 const spatialData = ref();
 const onSubmit = async () => {
   loading.value = true;
-  if (!mapService.searchForLayer('EpidemicPoints')) {
+  layer = mapService.searchForLayer('EpidemicPoints');
+  if (!layer) {
     layer = createEpidemicPointLayer();
     mapService.pushLayer(layer);
   }

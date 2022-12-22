@@ -17,6 +17,7 @@
     "echarts": "^5.4.1",
     "element-plus": "^2.2.26",
     "ol": "^7.1.0",
+    "ol-mapbox-style": "^9.2.4",
     "vue": "^3.2.45",
     "vue-echarts": "^6.3.2",
     "vue-router": "^4.1.6",
