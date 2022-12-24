@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-21 21:34:04
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-22 23:21:34
+ * @LastEditTime: 2022-12-24 17:17:06
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MapTools/CovTimeLine.vue
  * @Description: 
  * 
@@ -11,7 +11,7 @@
 <template>
   <div>
     <div class="tl-info d-flex text-start">
-      <div class="tl-statistic d-flex">
+      <div class="tl-statistic d-flex me-auto">
         <div class="item date">
           <div>On the day of</div>
           <div>{{ date }}</div>
@@ -29,7 +29,7 @@
           <div :style="{ color: '#767676' }">{{ DataToday.deaths }}</div>
         </div>
       </div>
-      <div class="tl-control">
+      <div class="tl-control flex-fill text-center">
         <el-icon :style="{ color: '#3F9EFF', cursor: 'pointer' }" @click="playHandler"><VideoPlay v-if="!play" /><VideoPause v-else /></el-icon>
       </div>
     </div>
@@ -101,6 +101,10 @@ const playHandler = () => {
       if (valueForDate.value === 339) {
         clearInterval(timer);
         play.value = false;
+        ElMessage({
+          message: 'Timeline ends',
+          appendTo: '#map'
+        });
         return;
       }
       valueForDate.value += steps.value;

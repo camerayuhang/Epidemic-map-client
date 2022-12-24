@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-21 16:51:09
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-23 08:14:04
+ * @LastEditTime: 2022-12-24 17:17:14
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MapTools/CreatePointsDialog.vue
  * @Description: 
  * 
@@ -53,6 +53,12 @@ const onSubmit = async () => {
   const { data } = await EpidemicService.getEpidemicInfo(form);
   spatialData.value = data;
   createFeatures(layer, spatialData.value);
+  ElMessage({
+    showClose: true,
+    message: 'Create Points successfully!',
+    type: 'success',
+    appendTo: '#map'
+  });
   loading.value = false;
 };
 </script>

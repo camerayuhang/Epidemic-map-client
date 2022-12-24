@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-10 16:48:40
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 20:35:56
+ * @LastEditTime: 2022-12-23 21:37:00
  * @FilePath: /vue3-composition-epidemic-map/src/service/Utils/baseutils.js
  * @Description:
  *
@@ -20,6 +20,19 @@ const fileToBase64 = file => {
     reader.onerror = err => {
       reject(err);
     };
+  });
+  return promise;
+};
+const readFileAsText = file => {
+  const promise = new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.addEventListener('load', () => {
+      resolve(reader.result);
+    });
+    reader.addEventListener('error', () => {
+      reject(reader.result);
+    });
   });
   return promise;
 };
@@ -84,4 +97,4 @@ const clearEmptyString = form => {
   return formCopy;
 };
 
-export { fileToBase64, clearEmptyValue, diffFormData, reOrderArr, getIndexof, clearEmptyString };
+export { readFileAsText, fileToBase64, clearEmptyValue, diffFormData, reOrderArr, getIndexof, clearEmptyString };

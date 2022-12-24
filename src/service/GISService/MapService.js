@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-09 16:41:35
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-22 23:06:38
+ * @LastEditTime: 2022-12-23 19:12:00
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/MapService.js
  * @Description:
  *
@@ -66,7 +66,7 @@ class MapService {
    * initialize the Layers of this map
    */
   initLayer = () => {
-    const layer = new VectorTileLayer({ declutter: true, name: 'streets-v12', updateWhileAnimating: true });
+    const layer = new VectorTileLayer({ declutter: true, name: 'streets-v12', updateWhileAnimating: false });
     applyStyle(layer, 'mapbox://styles/camerayuhang/clbrqirmf000715o2tk1dv26u', { accessToken: 'pk.eyJ1IjoiY2FtZXJheXVoYW5nIiwiYSI6ImNsYnJwMmt1eDFmaGMzcHBsMHl1dXpqOW0ifQ.voxLAF6gSmGJKrhDNsYGGw' });
     this.pushLayer(layer);
     this.province = getVectorTileFromGeoServer('camerayuhang:China_Provinces_UTF-8', '900913', 'ChinaProvinces');

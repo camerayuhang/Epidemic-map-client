@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-11 16:31:54
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-22 22:55:54
+ * @LastEditTime: 2022-12-23 19:54:28
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MyTools.vue
  * @Description: 
  * 
@@ -16,6 +16,9 @@
       </button>
       <div class="collapse navbar-collapse item-group" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 item-group h-100">
+          <li class="nav-item">
+            <AddData></AddData>
+          </li>
           <li class="nav-item">
             <el-button type="primary" :style="{ height: '100%' }" @click="toolVisiable.createPoints = true"> Create Points </el-button>
           </li>
@@ -51,6 +54,7 @@
 </template>
 <script setup>
 import { ref, reactive, computed } from 'vue';
+import AddData from './MapTools/AddData.vue';
 import MyPanel from '../../Template/MyPanel.vue';
 import SymbolizationPanel from './MapTools/SymbolizationPanel.vue';
 import GraphsPanel from './MapTools/GraphsPanel.vue';

@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-11-23 21:18:21
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-22 15:35:42
+ * @LastEditTime: 2022-12-24 21:48:48
  * @FilePath: /vue3-composition-epidemic-map/src/App.vue
  * @Description: 
  * 
@@ -11,8 +11,8 @@
 
 <template>
   <div class="h-100">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <RouterLink to="/" class="navbar-brand">camerayuhang</RouterLink>
+    <nav class="navbar navbar-expand navbar-dark bg-dark align-items-center" :style="{ height: '56px' }">
+      <a src="https://openlayers.org/" :style="{ cursor: 'pointer' }" class="d-flex align-items-center me-2"><img class="ms-2 me-2" src="@/assets/logo-dark.svg" alt="" width="35" height="35" /> <span :style="{ color: 'white', fontSize: '22px' }">COVID-19 Tracker</span></a>
       <div class="navbar-nav me-auto">
         <li class="nav-item">
           <router-link to="/home" class="nav-link"> Home </router-link>
@@ -74,7 +74,9 @@ const logOut = () => {
   /* overflow: hidden; */
   /*margin-top: 60px; */
 }
-
+a {
+  text-decoration: none !important;
+}
 html,
 body {
   margin: 0;

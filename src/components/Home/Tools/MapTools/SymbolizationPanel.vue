@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-18 19:39:50
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-22 17:20:09
+ * @LastEditTime: 2022-12-24 19:59:44
  * @FilePath: /vue3-composition-epidemic-map/src/components/Home/Tools/MapTools/SymbolizationPanel.vue
  * @Description: 
  * 
@@ -16,7 +16,7 @@
           <el-option v-for="item in mehodLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>
-      <el-form-item label="Province">
+      <el-form-item label="Province" v-if="methodSelected != 'Heatmap'">
         <el-select v-model="formWrap.province" placeholder="select Province" :teleported="false">
           <el-option v-for="item in provinceLabels" :label="item" :value="item" />
         </el-select>
@@ -26,12 +26,12 @@
           <el-option v-for="item in layerLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>
-      <el-form-item label="Field">
+      <el-form-item label="Field" v-if="methodSelected != 'Heatmap'">
         <el-select v-model="fieldSelected" placeholder="select Field" :teleported="false">
           <el-option v-for="item in fieldLabels" :label="item" :value="item" />
         </el-select>
       </el-form-item>
-      <el-form-item label="Date">
+      <el-form-item label="Date" v-if="methodSelected != 'Heatmap'">
         <el-select v-model="formWrap.date" placeholder="select Date" :teleported="false">
           <el-option v-for="item in dateLabels" :label="item" :value="item" />
         </el-select>
@@ -57,10 +57,11 @@ import { GraduatedSymbolRenderer } from '../../../../service/GISService/Renderer
 import mapService from '../../../../service/GISService/MapService.js';
 import epidemicService from '../../../../service/DataService/EpidemicService';
 import MyLegend from '../MapTools/Legend.vue';
-import { createEpidemicPointLayer, createFeatures } from '../../../../service/GISService/LayerTools';
+import { createEpidemicPointLayer, createFeatures, getHeatMap } from '../../../../service/GISService/LayerTools';
 import { clearEmptyString } from '../../../../service/Utils/baseutils';
 import { SelectInteraction } from '../../../../service/GISService/Interaction/SelectInteraction.js';
 import { useStore } from 'vuex';
+
 defineProps({
   visiable: Boolean
 });
@@ -125,6 +126,17 @@ watch(methodSelected, () => {
 
 const MappingHandler = async () => {
   loading.value = true;
+  if (methodSelected.value == 'Heatmap') {
+    fieldSelected.value = '';
+    const heatLayer = getHeatMap(layer.getSource(), layer.get('name') + '_heatmap');
+    mapService.pushLayer(heatLayer);
+    ElMessage({
+      showClose: true,
+      message: 'Symbolization success!',
+      type: 'success',
+      appendTo: '#map'
+    });
+  }
   if (methodSelected.value == 'Graduated Symbol') {
     const { data } = await epidemicService.getEpidemicInfo(form.value);
     // if (!mapService.searchForLayer('EpidemicPoints')) {
@@ -140,12 +152,21 @@ const MappingHandler = async () => {
   } else if (methodSelected.value == 'Graduated Color') {
     combinedData = await fetchAPI(form.value);
   }
-  // the last 2 args are useless for Graduated Symbol
-  const renderer = new Renderer(fieldSelected.value, layer, combinedData, symbolizationService.joinTable, joinedField);
-  layer.set('colorMap', renderer.colorMap);
-  renderer.render();
-  colorMap.value = layer.get('colorMap');
-  mapService._map.render();
+  if (layer && fieldSelected.value) {
+    // the last 2 args are useless for Graduated Symbol
+    const renderer = new Renderer(fieldSelected.value, layer, combinedData, symbolizationService.joinTable, joinedField);
+    layer.set('colorMap', renderer.colorMap);
+    renderer.render();
+    colorMap.value = layer.get('colorMap');
+    mapService._map.render();
+    ElMessage({
+      showClose: true,
+      message: 'Symbolization success!',
+      type: 'success',
+      appendTo: '#map'
+    });
+  }
+
   loading.value = false;
 };
 

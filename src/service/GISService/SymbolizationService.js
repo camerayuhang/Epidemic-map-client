@@ -2,7 +2,7 @@
  * @Author: camerayuhang
  * @Date: 2022-12-11 20:13:04
  * @LastEditors: camerayuhang
- * @LastEditTime: 2022-12-21 20:08:53
+ * @LastEditTime: 2022-12-24 16:24:50
  * @FilePath: /vue3-composition-epidemic-map/src/service/GISService/SymbolizationService.js
  * @Description:
  *
@@ -23,7 +23,7 @@ class SymbolizationService {
     this.fieldLabels = ref([]);
     this.dateLabels = ref([]);
     this.provinceLabels = ref([]);
-    this.methodLabels = ref(['Graduated Color', 'Graduated Symbol']);
+    this.methodLabels = ref(['Graduated Color', 'Graduated Symbol', 'Heatmap']);
   }
   getDefaultStyle() {
     const fill = new Fill({
